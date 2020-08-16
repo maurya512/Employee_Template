@@ -2,35 +2,35 @@
 // create a class called employee
 class Employee {
     // create a constructor that will hold the atrributes of an employee
-    constructor(name, id, email){
+    constructor(name, id, email) {
         // instantiate the properties 
         this.name = name;
         this.id = id;
         this.email = email;
         this.title = "Employee"
-        
+
     }
 
     // a method to return the employee's name
-    getName(){
+    getName() {
         return this.name;
     }
 
     // a method to return the employee's id
-    getId(){
+    getId() {
         return this.id;
     }
 
     // a method to return the employee's email
-    getEmail(){
+    getEmail() {
         return this.email;
     }
 
     // a method to return the employee's role
-    getRole(){
+    getRole() {
         return this.title;
     }
 }
 
-
+// export the class Employee 
 module.exports = Employee
