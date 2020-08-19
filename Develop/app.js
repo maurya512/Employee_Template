@@ -34,7 +34,51 @@ function buildTeam () {
             message: "What type of employee are they?",
             choices: ["manager", "engineer", "intern"]
         }
-    ])
+    ]).then(function(empDetail){
+        // assigning properties to employees
+        this.name = empDetail.name;
+        this.id = empDetail.id;
+        this.role = empDetail.role;
+    }).then(function() {
+        email();
+        // a function to gather and validate the employee's email
+        function email() {
+            inquirer.prompt([
+                {
+                    type: "input",
+                    name: "email",
+                    message: "What is the employee's email id?"
+                }
+            ]).then(function(empEmail) {
+                // assigning employee's email a property
+                this.email = empEmail.email;
+
+                // check the type of employee
+                if(this.role === "manager"){
+                    // if employee type is manager then gather their office number
+                    inquirer.prompt([
+                        {
+                            type: "input",
+                            name: "officeNumber",
+                            message: "What is the manager's office number?"
+                        }
+                    ]).then(function(managerOfficeNumber){
+                        // adding manager's office number property 
+                        this.officeNummber = managerOfficeNumber.officeNummber;
+
+                        // create a new manager with all of "manager's" properties
+                        const manager = new Manager(this.name, this.id, this.email, this.officeNummber);
+                        // logging manager to see if we were able to create a new manager successfully
+                        console.log(manager);
+
+                        // push this manager into our empty team array
+                        team.push(Manager);
+                    })
+                }
+                
+            })
+        }
+    })
 }
 
 
