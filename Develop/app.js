@@ -9,153 +9,32 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const emailValidate = require("email-validator");
 
+// an empty array that will be used to store the employees
+const team = [];
 
-// array of objects to add manager
- const managerQuestions = [
-     {
-         type: "input",
-         name: "name",
-         message: "What is the manager's name?"
-     },
-     {
-         type: "input",
-         name: "id",
-         message: "What is the manager's employee id?"
-     },
-     {
-         type: "input",
-         name: "email",
-         message: "What is the manager's work email?"
-     },
-     {
-         type: "input",
-         name: "officeNumber",
-         message: "What is the manager's office number?"
-     },
-     {
-         type: "checkbox",
-         name: "member",
-         message: "What type of employee would you like to add next?",
-         choices: ["engineer, intern"]
-     }
- ];
-
-//  array of objects to add engineers
-const engineerQuestions = [
-    {
-        type: "input",
-        name: "name",
-        message: "What is the employee's name"
-    },
-    {
-        type: "input",
-        name: "email",
-        message: "What is the employee's email id?"
-    },
-    {
-        type: "input",
-        name: "id",
-        message: "What is the employee's employee id?"
-    },
-    {
-        type: "input",
-        name: "github",
-        message: "What is the employee's github user name?"
-    }
-];
-
-// array of objects to add interns
-const interQuestions = [
-    {
-        type: "input",
-        name: "name",
-        message: "What is the intern's name?"
-    },
-    {
-        type: "input",
-        name: "id",
-        message: "What is the intern's employee id?"
-    },
-    {
-        type: "input",
-        name: "email",
-        message: "What is the intern's email address?"
-    },
-    {
-        type: "input",
-        name: "school",
-        message: "What school is the intern attending right now?"
-    }
-];
-// array of objects to make sure whether the user wants to add more employees or not
-const contOrEnd = [
-    {
-        type: "checkbox",
-        name: "choice",
-        message: "Add more employees?",
-        choice: ["yes","no"]
-    }
-];
-
-// array of objects to choose what type of member we want to add 
-const typeOfEmployee = [
-    {
-        type: "checkbox",
-        name: "empchoice",
-        message: "Choose the type of employee you want to add.",
-        choice: ["engineer", "intern"]
-    }
-];
-
-inquirer.prompt(managerQuestions).then(function(user) {
-    const empFile = fs.readFileSync(`./templates/main.html`, {encoding: 'utf8'});
-    // create a new manager using data gathered from array of objects
-    const newManager = new Manager (user.name , user.id, user.email, user.officeNumber);
-
-    let team = renderHTML(manager);
-    let proceed = true;
-
-    
-    // create a function that takes employee position as input parameter
-    function renderHTML (employeePosition) {
-        const outputFile = fs.readFileSync(`./templates/${employeePosition.getRole().toLowerCase()}.html`, {encoding: 'utf8'});
-        let tempFile = outputFile.replace('{{name}}',employeePosition.name);
-        tempFile = tempFile.replace('{{role}}',employeePosition.getRole());
-        tempFile = tempFile.replace('{{id}}',employeePosition.id);
-        tempFile = tempFile.replace('{{email}}',employeePosition.email);
-
-        // check the position entered by the user 
-        if(employeePosition.getRole().toLowerCase() === "manager"){
-            tempFile = tempFile.replace('{{officeNumber}}',employeePosition.officeNumber);
+// create a function that asks the user to enter what type of employee they want to add, how many employees they want to add and if they want to add any more employees
+function buildTeam () {
+    // inquire the user with questions and gather their response by prompting them
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "What is employee's name?",
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "What is the employee's employee id?"
+        },
+        {
+            type: "list",
+            name: "role",
+            message: "What type of employee are they?",
+            choices: ["manager", "engineer", "intern"]
         }
-        else if(employeePosition.getRole().toLowerCase() === "engineer"){
-            tempFile = tempFile.replace('{{github}}', employeePosition.github);
-        }
-        else if(employeePosition.getRole().toLowerCase() === "intern"){
-            tempFile = tempFile.replace('{{school}}', employeePosition.school);
-        }
-        return tempFile;
-    }
-})
+    ])
+}
 
 
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
