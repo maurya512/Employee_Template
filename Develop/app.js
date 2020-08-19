@@ -88,6 +88,25 @@ const interQuestions = [
         message: "What school is the intern attending right now?"
     }
 ];
+// array of objects to make sure whether the user wants to add more employees or not
+const contOrEnd = [
+    {
+        type: "checkbox",
+        name: "choice",
+        message: "Add more employees?",
+        choice: ["yes","no"]
+    }
+];
+
+// array of objects to choose what type of member we want to add 
+const typeOfEmployee = [
+    {
+        type: "checkbox",
+        name: "empchoice",
+        message: "Choose the type of employee you want to add.",
+        choice: ["engineer", "intern"]
+    }
+];
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 
