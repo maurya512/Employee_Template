@@ -107,7 +107,37 @@ const typeOfEmployee = [
         choice: ["engineer", "intern"]
     }
 ];
-// and to create objects for each team member (using the correct classes as blueprints!)
+
+inquirer.prompt(managerQuestions).then(function(user) {
+    const empFile = fs.readFileSync(`./templates/main.html`, {encoding: 'utf8'});
+    // create a new manager using data gathered from array of objects
+    const newManager = new Manager (user.name , user.id, user.email, user.officeNumber);
+
+    let team = renderHTML(manager);
+    let proceed = true;
+
+    
+    // create a function that takes employee position as input parameter
+    function renderHTML (employeePosition) {
+        const outputFile = fs.readFileSync(`./templates/${employeePosition.getRole().toLowerCase()}.html`, {encoding: 'utf8'});
+        let tempFile = outputFile.replace('{{name}}',employeePosition.name);
+        tempFile = tempFile.replace('{{role}}',employeePosition.getRole());
+        tempFile = tempFile.replace('{{id}}',employeePosition.id);
+        tempFile = tempFile.replace('{{email}}',employeePosition.email);
+
+        // check the position entered by the user 
+        if(employeePosition.getRole().toLowerCase() === "manager"){
+            tempFile = tempFile.replace('{{officeNumber}}',employeePosition.officeNumber);
+        }
+        else if(employeePosition.getRole().toLowerCase() === "engineer"){
+            tempFile = tempFile.replace('{{github}}', employeePosition.github);
+        }
+        else if(employeePosition.getRole().toLowerCase() === "intern"){
+            tempFile = tempFile.replace('{{school}}', employeePosition.school);
+        }
+        return tempFile;
+    }
+})
 
 
 // After the user has input all employees desired, call the `render` function (required
