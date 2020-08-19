@@ -11,8 +11,85 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
 
-// Write code to use inquirer to gather information about the development team members,
+// array of objects to add manager
+ const managerQuestions = [
+     {
+         type: "input",
+         name: "name",
+         message: "What is the manager's name?"
+     },
+     {
+         type: "input",
+         name: "id",
+         message: "What is the manager's employee id?"
+     },
+     {
+         type: "input",
+         name: "email",
+         message: "What is the manager's work email?"
+     },
+     {
+         type: "input",
+         name: "officeNumber",
+         message: "What is the manager's office number?"
+     },
+     {
+         type: "checkbox",
+         name: "member",
+         message: "What type of employee would you like to add next?",
+         choices: ["engineer, intern"]
+     }
+ ];
+
+//  array of objects to add engineers
+const engineerQuestions = [
+    {
+        type: "input",
+        name: "name",
+        message: "What is the employee's name"
+    },
+    {
+        type: "input",
+        name: "email",
+        message: "What is the employee's email id?"
+    },
+    {
+        type: "input",
+        name: "id",
+        message: "What is the employee's employee id?"
+    },
+    {
+        type: "input",
+        name: "github",
+        message: "What is the employee's github user name?"
+    }
+];
+
+// array of objects to add interns
+const interQuestions = [
+    {
+        type: "input",
+        name: "name",
+        message: "What is the intern's name?"
+    },
+    {
+        type: "input",
+        name: "id",
+        message: "What is the intern's employee id?"
+    },
+    {
+        type: "input",
+        name: "email",
+        message: "What is the intern's email address?"
+    },
+    {
+        type: "input",
+        name: "school",
+        message: "What school is the intern attending right now?"
+    }
+];
 // and to create objects for each team member (using the correct classes as blueprints!)
+
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
