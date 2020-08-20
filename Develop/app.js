@@ -67,10 +67,10 @@ function buildTeam() {
                             }
                         ]).then(function (managerOfficeNumber) {
                             // adding manager's office number property 
-                            this.officeNummber = managerOfficeNumber.officeNummber;
+                            this.officeNumber = managerOfficeNumber.officeNumber;
 
                             // create a new manager with all of "manager's" properties
-                            const manager = new Manager(this.name, this.id, this.email, this.officeNummber);
+                            const manager = new Manager(this.name, this.id, this.email, this.officeNumber);
 
                             // logging manager to see if we were able to create a new manager successfully
                             console.log(manager);
@@ -78,7 +78,7 @@ function buildTeam() {
                             console.log(this.id);
                             console.log(this.email);
                             console.log(this.role);
-                            console.log(this.officeNummber);
+                            console.log(this.officeNumber);
 
                             // push this manager into our empty team array
                             team.push(manager);
