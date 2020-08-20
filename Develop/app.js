@@ -4,11 +4,11 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+const render = require("./lib/htmlRenderer");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-const render = require("./lib/htmlRenderer");
 const emailValidate = require("email-validator");
 
 // an empty array that will be used to store the employees
@@ -21,7 +21,7 @@ function buildTeam() {
         {
             type: "input",
             name: "name",
-            message: "What is employee's name?",
+            message: "What is the employee's name?",
         },
         {
             type: "input",
@@ -32,7 +32,7 @@ function buildTeam() {
             type: "list",
             name: "role",
             message: "What type of employee are they?",
-            choices: ["manager", "engineer", "intern"]
+            choices: ["Manager", "Engineer", "Intern"]
         }
     ]).then(function (empDetail) {
         // assigning properties to employees
@@ -57,7 +57,7 @@ function buildTeam() {
                     this.email = empEmail.email;
 
                     // check the type of employee
-                    if (this.role === "manager") {
+                    if (this.role === "Manager") {
                         // if employee type is manager then gather their office number
                         inquirer.prompt([
                             {
@@ -71,7 +71,9 @@ function buildTeam() {
 
                             // create a new manager with all of "manager's" properties
                             const manager = new Manager(this.name, this.id, this.email, this.officeNummber);
+
                             // logging manager to see if we were able to create a new manager successfully
+                            console.log(manager);
                             console.log(this.name);
                             console.log(this.id);
                             console.log(this.email);
@@ -79,13 +81,13 @@ function buildTeam() {
                             console.log(this.officeNummber);
 
                             // push this manager into our empty team array
-                            team.push(Manager);
+                            team.push(manager);
                         }).then(function () {
                             addMoreEmp();
                         })
                     }
                     // check if the employee type is an engineer
-                    else if (this.role === "engineer") {
+                    else if (this.role === "Engineer") {
                         // inquire and prompt the user for the employee's github username
                         inquirer.prompt([
                             {
@@ -130,7 +132,7 @@ function buildTeam() {
                             const intern = new Intern(this.name, this.id, this.email, this.school);
 
                             // pushing the intern to the school
-                            team.push(school);
+                            team.push(intern);
                         }).then(function () {
                             addMoreEmp();
                         })
@@ -169,5 +171,23 @@ function addMoreEmp() {
     })
 }
 
+// create a function that will create the team's portfolio for us to view
+function buildTeamPortfolio() {
+    // check if the output directory exists or not
+    if(!fs.existsSync(OUTPUT_DIR)){
+        fs.mkdirSync(OUTPUT_DIR);
+    }
+    // create a file and if a file exists override it
+    fs.writeFile(outputPath, render(team), "utf8", function(error) {
+        if(error){
+            console.log(error);
+            return;
+        }
+        console.log("Successfully created a file");
+    })
 
+}
+
+// call the function
+buildTeam();
 
