@@ -147,4 +147,27 @@ function buildTeam() {
     })
 }
 
+// create a new function to add more emp addMoreEmp
+function addMoreEmp() {
+    // ask the user if they want to add more employees
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "continue",
+            message: "Would you like to add more employees to the team?",
+            choices: ["yes",'no']
+        }
+        // if the user agrees to add more employee we ask them to 
+    ]).then(function (addEmp){
+        if(addEmp.continue === "yes"){
+            buildTeam();
+        }
+        else {
+            buildTeamPortfolio();
+            return "The team consists of: " + JSON.stringify(team);
+        }
+    })
+}
+
+
 
