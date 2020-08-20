@@ -10,11 +10,13 @@
    - [Project Test](#Testing)
    - [Project Contributors](#Contributors)
    - [Project Questions](#Questions)
+   - [Github Repository](#Repo)
+   - [URL](#URL)
    - [Screenshot](#Deployed)
    - [Demo Link](#VideoDemo)
 
 
-# Description
+# Description:
   This project was developed as a part of a homework assignment where the user enters information about their team and the application gives them their team's portfolio.
 
 
@@ -36,6 +38,12 @@
   Any questions regarding this project can be directed at me via:
   - [Github Profile](https://github.com/maurya512)
   - [Email Address](patelmaurya0512@gmail.com)
+
+# Github Repository:
+- [Repo](https://github.com/maurya512/Employee_Template)
+
+# URL
+- [URL Link](https://github.com/maurya512/Employee_Template/blob/master/Develop/app.js)
 
 # Screenshot:
 ![alt text](./Develop/images/team.png "Screenshot of the final prodcut.")
